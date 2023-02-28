@@ -1,0 +1,44 @@
+version: '3.8'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    restart: on-failure
+
+  videoservice:
+    build: ./VideoService/build/docker/main
+    container_name: videoservice
+    ports:
+      - "8080:8080"
+    volumes:
+      - type: bind
+        source: ./resources/uploads
+        target: /app
+    depends_on:
+      - rabbitmq
+    restart: on-failure
+
+  transcodingservice:
+    build: ./TranscodingService/build/docker/main
+    container_name: transcodingservice
+    ports:
+      - "8081:8081"
+    volumes:
+      - type: bind
+        source: ./resources
+        target: /app
+    depends_on:
+      - rabbitmq
+      - outboxservice
+    restart: on-failure
+
+  outboxservice:
+    build: ./OutBoxService/build/docker/main
+    container_name: outboxservice
+    ports:
+      - "8082:8082"
+    depends_on:
+      - rabbitmq
+    restart: on-failure

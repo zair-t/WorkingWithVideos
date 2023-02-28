@@ -1,0 +1,10 @@
+micronaut:
+  application:
+    name: outboxservice
+  server:
+    port: 8082
+
+---
+rabbitmq:
+  host: rabbitmq
+

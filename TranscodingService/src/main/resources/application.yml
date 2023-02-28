@@ -1,0 +1,30 @@
+micronaut:
+  application:
+    name: TranscodingService
+  server:
+    port: 8081
+
+---
+datasources:
+  default:
+    url: jdbc:postgresql://host.docker.internal:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+    username: postgres
+    password: 'videoServiceAdmin'
+    dialect: POSTGRES
+
+---
+jpa:
+  default:
+    properties:
+      hibernate:
+        bytecode:
+          provider: none
+        hbm2ddl:
+          auto: create
+        show_sql: true
+
+---
+rabbitmq:
+  host: rabbitmq

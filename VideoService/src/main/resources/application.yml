@@ -1,0 +1,39 @@
+micronaut:
+  server:
+    port: 8080
+  application:
+    name: VideoService
+
+---
+datasources:
+  default:
+    url: jdbc:postgresql://host.docker.internal:5432/postgres
+    driver-class-name: org.postgresql.Driver
+    db-type: postgres
+    username: postgres
+    password: 'videoServiceAdmin'
+    dialect: POSTGRES
+
+---
+jpa:
+  default:
+    properties:
+      hibernate:
+        bytecode:
+          provider: none
+        hbm2ddl:
+          auto: create
+        show_sql: true
+
+---
+micronaut:
+  server:
+    max-request-size: 10485760000 #10GB
+    multipart:
+      disk: true
+      enabled: true
+      max-file-size: 10485760000 #10GB
+
+#---
+#rabbitmq:
+#  host: rabbitmq
