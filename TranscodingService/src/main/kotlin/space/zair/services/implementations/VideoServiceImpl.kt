@@ -20,6 +20,6 @@ class VideoServiceImpl(
     override fun saveVideo(request: TranscodedVideoRequest): Result<TranscodedVideo> =
         runCatching {
             videoRepo.save(TranscodedVideo(request.name.substringBeforeLast("."),
-                "/home/zair/Рабочий стол/Projects/WorkingWithVideos/resources/${request.quality}/${request.name}"))
+                "/app/${request.quality}/${request.name}"))
         }
 }

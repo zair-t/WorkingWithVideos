@@ -23,9 +23,20 @@ class VideoController(
     @Get("/videos")
     fun getVideos(): Iterable<Video> = videoService.getVideos()
 
+    // does not work
+    @Get("/videos/page/{num}")
+    fun getPage(@PathVariable num: Int, @QueryValue numOnPage: Int)
+        = videoService.getPageWithVideos(numOnPage, num)
+
+    // I thought CompletedFileUpload will write data to memory, not to disk.
+    // As I remember I even got outOfMemoryException while using this...
+    // But it seems to work here
     @Post("/videos")
     @Consumes(MediaType.MULTIPART_FORM_DATA)
     fun saveVideo(@Body file: CompletedFileUpload) {
+        // As I understood OutBox pattern, saving video to database and
+        // adding message to OutBox should be in one transaction.
+        // File name should be uniq (for example id.ext)
         videoService.saveVideo(VideoRequest(file.filename, file))
         logger.info("requsting...")
         executePost("http://outboxservice:8082/start", "\""+file.filename+"\"")

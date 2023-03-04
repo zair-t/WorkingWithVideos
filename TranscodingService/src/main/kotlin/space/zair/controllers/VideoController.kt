@@ -7,15 +7,18 @@ import space.zair.model.entity.TranscodedVideo
 import space.zair.services.VideoService
 import java.io.File
 
+// These controllers should be in VideoService microservice, not here
 @Controller("/api")
 class VideoController(
     private val videoService: VideoService,
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
+    // Duplicate from VideoService
     @Get("/videos")
     fun getVideos(): Iterable<TranscodedVideo> = videoService.getVideos()
 
+    // Duplicate from VideoService
     @Post("/videos")
     fun saveVideo(@Body transcodedVideoRequest: TranscodedVideoRequest) {
         videoService.saveVideo(transcodedVideoRequest)
