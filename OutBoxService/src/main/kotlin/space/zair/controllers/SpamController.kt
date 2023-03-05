@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory
 import space.zair.jobs.OutBoxJob
 
 @Controller
+// May be better to name just OutBoxController
 class SpamController {
     private val logger = LoggerFactory.getLogger(this::class.java)
 

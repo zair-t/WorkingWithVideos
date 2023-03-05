@@ -2,6 +2,7 @@ version: '3.8'
 services:
   rabbitmq:
     image: rabbitmq:3-management
+    container_name: rabbitmq
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -32,7 +33,7 @@ services:
     depends_on:
       - rabbitmq
       - outboxservice
-    restart: on-failure
+#    restart: on-failure
 
   outboxservice:
     build: ./OutBoxService/build/docker/main
@@ -42,3 +43,14 @@ services:
     depends_on:
       - rabbitmq
     restart: on-failure
+
+  postgres:
+    image: postgres:13.3
+    container_name: postgres
+    environment:
+      POSTGRES_DB: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "videoServiceAdmin"
+    ports:
+      - "5432:5432"
+

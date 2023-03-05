@@ -7,4 +7,5 @@ interface VideoService {
     fun getVideos(): Iterable<Video>
     fun getVideo(id: Long): Video
     fun saveVideo(request: VideoRequest): Result<Video>
+    fun getPageWithVideos(numOnPage: Int, page: Int): List<Video>
 }

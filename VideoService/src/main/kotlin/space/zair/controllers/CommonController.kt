@@ -3,7 +3,7 @@ package space.zair.controllers
 import io.micronaut.http.annotation.Controller
 import io.micronaut.http.annotation.Get
 
-@Controller
+@Controller("/api")
 class CommonController {
     @Get("/state")
     fun getState(): String = "I'm working"
