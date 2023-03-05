@@ -1,5 +1,7 @@
 package space.zair.services.implementation
 
+import io.micronaut.data.model.Page
+import io.micronaut.data.model.Pageable
 import jakarta.inject.Singleton
 import org.slf4j.LoggerFactory
 import space.zair.model.dto.exception.ResourceNotFoundException
@@ -19,17 +21,11 @@ class VideoServiceImpl(
 
     override fun getVideos(): Iterable<Video> = videoRepo.findAll()
 
-    override fun getPageWithVideos(numOnPage: Int, page: Int): List<Video> {
-        val list: MutableList<Video> = mutableListOf()
-        videoRepo.findOrderByIdAsc().forEach{list += it}
-        return if (list.size >= page * numOnPage) {
-            list.slice((page - 1) * numOnPage .. page * numOnPage)
-        } else if ( (page - 1) * numOnPage <= list.size && list.size <= page * numOnPage) {
-            list.slice((page - 1) * numOnPage .. list.size)
-        } else {
-            emptyList()
-        }
-//        return list.slice((page - 1) * numOnPage .. page * numOnPage)
+    override fun getPageWithVideos(numOnPage: Int, page: Int): MutableList<Video> {
+//        val list: MutableList<Video> = mutableListOf()
+        log.info("Get page: on page: $numOnPage, page: $page")
+        val pageable = Pageable.from(page, numOnPage)
+        return videoRepo.findAll(pageable).content
     }
 
     override fun getVideo(id: Long): Video = videoRepo.findById(id).orElseThrow() { ResourceNotFoundException() }

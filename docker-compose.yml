@@ -9,7 +9,8 @@ services:
     restart: on-failure
 
   videoservice:
-    build: ./VideoService/build/docker/main
+    # build: ./VideoService/build/docker/main
+    build: ./VideoService
     container_name: videoservice
     ports:
       - "8080:8080"
@@ -22,7 +23,7 @@ services:
     restart: on-failure
 
   transcodingservice:
-    build: ./TranscodingService/build/docker/main
+    build: ./TranscodingService
     container_name: transcodingservice
     ports:
       - "8081:8081"
@@ -36,7 +37,7 @@ services:
 #    restart: on-failure
 
   outboxservice:
-    build: ./OutBoxService/build/docker/main
+    build: ./OutBoxService
     container_name: outboxservice
     ports:
       - "8082:8082"

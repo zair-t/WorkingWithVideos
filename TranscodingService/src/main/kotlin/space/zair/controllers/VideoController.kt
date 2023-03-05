@@ -14,11 +14,9 @@ class VideoController(
 ) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
-    // Duplicate from VideoService
     @Get("/videos")
     fun getVideos(): Iterable<TranscodedVideo> = videoService.getVideos()
 
-    // Duplicate from VideoService
     @Post("/videos")
     fun saveVideo(@Body transcodedVideoRequest: TranscodedVideoRequest) {
         videoService.saveVideo(transcodedVideoRequest)

@@ -23,7 +23,6 @@ class VideoController(
     @Get("/videos")
     fun getVideos(): Iterable<Video> = videoService.getVideos()
 
-    // does not work
     @Get("/videos/page/{num}")
     fun getPage(@PathVariable num: Int, @QueryValue numOnPage: Int)
         = videoService.getPageWithVideos(numOnPage, num)
